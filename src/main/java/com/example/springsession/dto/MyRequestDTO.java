@@ -1,4 +1,4 @@
-package com.example.springsession.controller.dto;
+package com.example.springsession.dto;
 
 public class MyRequestDTO {
 

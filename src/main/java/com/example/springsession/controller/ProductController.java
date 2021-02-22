@@ -1,6 +1,7 @@
 package com.example.springsession.controller;
 
 
+import com.example.springsession.dto.ProductRequestDTO;
 import com.example.springsession.dto.SearchResponseDTO;
 import com.example.springsession.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ProductController {
    private SearchService searchService;
 
     @PostMapping(path =  "/search/{searchTerm}")
-    public SearchResponseDTO getProducts(@PathVariable String searchTerm, @RequestBody SearchResponseDTO request){
+    public SearchResponseDTO getProducts(@PathVariable String searchTerm, @RequestBody ProductRequestDTO request){
         return searchService.getProducts(searchTerm, request);
 
     }

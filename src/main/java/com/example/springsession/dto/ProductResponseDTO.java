@@ -1,10 +1,13 @@
 package com.example.springsession.dto;
 
+import java.util.List;
+
 public class ProductResponseDTO {
     private boolean inStock;
     private int salesPrice;
     private String description;
     private String title;
+
 
     public boolean isInStock() {
         return inStock;

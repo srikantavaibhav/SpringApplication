@@ -6,11 +6,22 @@ public class SearchResponseDTO {
 
     private List<ProductResponseDTO> products;
 
-    public List<ProductResponseDTO> getProducts(){
+    private List<ProductResponseDTO> locationBaseProducts;
+
+    public List<ProductResponseDTO> getProducts() {
         return products;
     }
 
     public void setProducts(List<ProductResponseDTO> products) {
         this.products = products;
     }
+
+    public List<ProductResponseDTO> getLocationBaseProducts() {
+        return locationBaseProducts;
+    }
+
+    public void setLocationBaseProducts(List<ProductResponseDTO> locationBaseProducts) {
+        this.locationBaseProducts = locationBaseProducts;
+    }
+
 }

@@ -17,65 +17,46 @@ public class SearchServiceImpl implements SearchService {
     private SearchClient searchClient;
 
     @Override
-    public SearchResponseDTO getProducts(String searchTerm, ProductRequestDTO request) {
+    public SearchResponseDTO getProducts( ProductRequestDTO request) {
 
-        ProductRequestDTO myProductDetails[] = new ProductRequestDTO[10];
+        ProductResponseDTO myProductDetails[] = new ProductResponseDTO[10];
+        ProductResponseDTO myProductDetailsLoc[] = new ProductResponseDTO[10];
 
         Map<String, Object> productsResponse = searchClient.getProducts(request.getSearchTerm());
         Map<String,Object> response = (Map<String, Object>)productsResponse.get("response");
         List<Map<String, Object>> products = (List<Map<String, Object>>)response.get("docs");
 
-        List<ProductResponseDTO> productDTOs = new ArrayList<>();
-        for(int i=0;i<products.size();i++){
-            ProductResponseDTO productResponseDTO = new ProductResponseDTO();
-
-            String title = (String)products.get(i).get("name");
-            productResponseDTO.setTitle(title);
-
-            String description = (String)products.get(i).get("description");
-            productResponseDTO.setDescription(description);
-
-            int b = (int)products.get(i).get("isInStock");
-            if(b==1)
-            {
-                productResponseDTO.setInStock(true);
-            }
-            else
-            {
-                productResponseDTO.setInStock(false);
-            }
-
-            double salePrice = (double)products.get(i).get("salePrice");
-            productResponseDTO.setSalesPrice((int)salePrice);
-
-            productDTOs.add(productResponseDTO);
-        }
-
+        Map<String, Object> productsResponseLoc = searchClient.getProducts("stockLocation"+request.getStockLocation());
+        Map<String,Object> responseLoc = (Map<String, Object>)productsResponse.get("response");
+        List<Map<String, Object>> productsLoc = (List<Map<String, Object>>)response.get("docs");
 
         SearchResponseDTO responseDTO = new SearchResponseDTO();
-        responseDTO.setProducts(productDTOs);
+        ProductResponseDTO[] product = new ProductResponseDTO[10];
+
+        for(int i=0; i<10; i++) {
+            myProductDetails[i] = new ProductResponseDTO();
+            int stock = (int)products.get(i).get("isInStock");
+            if(stock==1)
+                myProductDetails[i].setInStock(true);
+            else
+                myProductDetails[i].setInStock(false);
+            myProductDetails[i].setTitle((String) products.get(i).get("name"));
+            myProductDetails[i].setSalesPrice((int)((double) products.get(i).get("salePrice")));
+            myProductDetails[i].setDescription((String) products.get(i).get("description"));
+        }
+        for(int i=0; i<10; i++) {
+            myProductDetailsLoc[i] = new ProductResponseDTO();
+            int stock = (int)productsLoc.get(i).get("isInStock");
+            if(stock==1)
+                myProductDetailsLoc[i].setInStock(true);
+            else
+                myProductDetailsLoc[i].setInStock(false);
+            myProductDetailsLoc[i].setTitle((String) productsLoc.get(i).get("name"));
+            myProductDetailsLoc[i].setSalesPrice((int)((double) productsLoc.get(i).get("salePrice")));
+            myProductDetailsLoc[i].setDescription((String) productsLoc.get(i).get("description"));
+        }
+        responseDTO.setProducts(Arrays.asList(myProductDetails));
+        responseDTO.setLocationBaseProducts(Arrays.asList(myProductDetailsLoc));
         return responseDTO;
-        /*
-        ProductResponseDTO product1 = new ProductResponseDTO();
-        product1.setDescription("Samsung M51 is a mobile");
-        product1.setTitle("Samsung M51");
-        product1.setInStock(true);
-        product1.setSalesPrice(27000);
-        //responseDTO.setProducts(Arrays.asList(product1));
-
-        ProductResponseDTO product2 = new ProductResponseDTO();
-        product2.setDescription("Apple iPhone11 is a mobile");
-        product2.setTitle("iPhone11");
-        product2.setInStock(false);
-        product2.setSalesPrice(80000);
-        //responseDTO.setProducts(Arrays.asList(product2));
-
-        ProductResponseDTO[] product1and2 = {product1,product2};
-
-        responseDTO.setProducts(Arrays.asList(product1and2));
-
-
-        return responseDTO;
-        */
     }
 }

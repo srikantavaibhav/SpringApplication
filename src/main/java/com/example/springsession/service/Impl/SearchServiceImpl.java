@@ -43,6 +43,7 @@ public class SearchServiceImpl implements SearchService {
             myProductDetails[i].setTitle((String) products.get(i).get("name"));
             myProductDetails[i].setSalesPrice((int)((double) products.get(i).get("salePrice")));
             myProductDetails[i].setDescription((String) products.get(i).get("description"));
+            myProductDetails[i].setAllLocation((List<String>)products.get(i).get("stockLocation"));
         }
         for(int i=0; i<10; i++) {
             myProductDetailsLoc[i] = new ProductResponseDTO();
@@ -54,6 +55,7 @@ public class SearchServiceImpl implements SearchService {
             myProductDetailsLoc[i].setTitle((String) productsLoc.get(i).get("name"));
             myProductDetailsLoc[i].setSalesPrice((int)((double) productsLoc.get(i).get("salePrice")));
             myProductDetailsLoc[i].setDescription((String) productsLoc.get(i).get("description"));
+            myProductDetailsLoc[i].setAllLocation((List<String>)products.get(i).get("stockLocation"));
         }
         responseDTO.setProducts(Arrays.asList(myProductDetails));
         responseDTO.setLocationBaseProducts(Arrays.asList(myProductDetailsLoc));

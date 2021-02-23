@@ -7,7 +7,26 @@ public class ProductResponseDTO {
     private int salesPrice;
     private String description;
     private String title;
+    private List<String> stockLocation;
 
+    @Override
+    public String toString() {
+        return "ProductResponseDTO{" +
+                "inStock=" + inStock +
+                ", salesPrice=" + salesPrice +
+                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
+                ", stockLocation=" + stockLocation +
+                '}';
+    }
+
+    public List<String> getAllLocation() {
+        return stockLocation;
+    }
+
+    public void setAllLocation(List<String> allLocation) {
+        this.stockLocation = allLocation;
+    }
 
     public boolean isInStock() {
         return inStock;
@@ -41,13 +60,4 @@ public class ProductResponseDTO {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "ProductResponseDTO{" +
-                "inStock=" + inStock +
-                ", salesPrice=" + salesPrice +
-                ", description='" + description + '\'' +
-                ", title='" + title + '\'' +
-                '}';
-    }
 }

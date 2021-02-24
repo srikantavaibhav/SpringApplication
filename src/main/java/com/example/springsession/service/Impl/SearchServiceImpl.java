@@ -35,7 +35,7 @@ public class SearchServiceImpl implements SearchService {
         Runnable runnableTask1 = () ->
         {
             try {
-                System.out.println(Thread.currentThread().getName());
+                System.out.println("Task1: "+Thread.currentThread().getName());
                 Map<String, Object> productsResponse = searchClient.getProducts(request.getSearchTerm());
                 Map<String, Object> response = (Map<String, Object>) productsResponse.get("response");
                 List<Map<String, Object>> products = (List<Map<String, Object>>) response.get("docs");
@@ -48,7 +48,7 @@ public class SearchServiceImpl implements SearchService {
                     else
                         myProductDetails[i].setInStock(false);
                     myProductDetails[i].setTitle((String) products.get(i).get("name"));
-                    myProductDetails[i].setSalesPrice((int) ((double) products.get(i).get("salePrice")));
+//                    myProductDetails[i].setSalesPrice((int) ((double) products.get(i).get("salePrice")));
                     myProductDetails[i].setDescription((String) products.get(i).get("description"));
                 }
 
@@ -62,10 +62,10 @@ public class SearchServiceImpl implements SearchService {
 
         Runnable runnableTask2 = () -> {
             try {
-                System.out.println(Thread.currentThread().getName());
-                Map<String, Object> productsResponseLoc = searchClient.getProducts("stockLocation" + request.getStockLocation());
+                System.out.println("Task2: "+Thread.currentThread().getName());
+                Map<String, Object> productsResponseLoc = searchClient.getProducts("stockLocation:" + request.getStockLocation());
                 Map<String, Object> responseLoc = (Map<String, Object>) productsResponseLoc.get("response");
-                List<Map<String, Object>> productsLoc = (List<Map<String, Object>>) responseLoc.get("docs");
+                List<Map<String, Object>> productsLoc = (List<Map<String, Object>>) (responseLoc.get("docs"));
 
 
                 ProductResponseDTO[] product = new ProductResponseDTO[10];
@@ -78,7 +78,7 @@ public class SearchServiceImpl implements SearchService {
                     else
                         myProductDetailsLoc[i].setInStock(false);
                     myProductDetailsLoc[i].setTitle((String) productsLoc.get(i).get("name"));
-                    myProductDetailsLoc[i].setSalesPrice((int) ((double) productsLoc.get(i).get("salePrice")));
+//                    myProductDetailsLoc[i].setSalesPrice((int) ((double) productsLoc.get(i).get("salePrice")));
                     myProductDetailsLoc[i].setDescription((String) productsLoc.get(i).get("description"));
                 }
 
@@ -88,10 +88,6 @@ public class SearchServiceImpl implements SearchService {
                 e.printStackTrace();
             }
         };
-
-
-
-
 
 
         executorService.execute(runnableTask1);

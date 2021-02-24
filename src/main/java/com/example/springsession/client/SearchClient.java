@@ -14,7 +14,7 @@ public interface SearchClient {
      * API Ref.
      * [GET] 10.177.68.77:8983/solr/productCollection/select?q=samsung+galaxy
      */
-    @RequestMapping(method = RequestMethod.GET, path = "/solr/productCollection/select")
+    @RequestMapping(method = RequestMethod.GET, path = "/solr/productCollection/select") //solr is a search platform for websites
     Map<String, Object> getProducts(@RequestParam("q") String query);
 
 }
